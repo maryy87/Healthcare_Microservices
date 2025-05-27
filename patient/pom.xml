@@ -52,6 +52,11 @@
             <artifactId>postgresql</artifactId>
             <version>42.7.3</version> <!-- o l'ultima versione disponibile -->
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-openfeign -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
 
     </dependencies>
 
