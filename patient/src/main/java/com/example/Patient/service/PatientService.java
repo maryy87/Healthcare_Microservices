@@ -1,13 +1,7 @@
 package com.example.Patient.service;
 
-import com.example.Patient.config.AppuntamentoClientConfig;
-import com.example.Patient.config.DoctorClientConfig;
-import com.example.Patient.dto.request.AppuntamentoRequest;
 import com.example.Patient.dto.request.FiltroPatientRequest;
 import com.example.Patient.dto.request.PatientRequest;
-import com.example.Patient.dto.response.AppuntamentoResponse;
-import com.example.Patient.dto.response.AppuntamentoResponse1;
-import com.example.Patient.dto.response.DoctorResponse;
 import com.example.Patient.dto.response.PatientResponse;
 import com.example.Patient.mapper.PatientMapper;
 import com.example.Patient.model.Patient;
@@ -23,50 +17,12 @@ import java.util.Optional;
 public class PatientService {
 
     @Autowired
-    private PatientMapper patientMapper;
+    PatientMapper patientMapper;
     @Autowired
-    private PatientRepository patientRepository;
-    @Autowired
-    private DoctorClientConfig doctorClientConfig;
-    @Autowired
-    private CustomPatientRepository customPatientRepository;
+    PatientRepository patientRepository;
 
     @Autowired
-    private AppuntamentoClientConfig appuntamentoClientConfig;
-
-
-    public AppuntamentoResponse1 creaAppuntamento(AppuntamentoRequest appuntamentoRequest) {
-        if (appuntamentoRequest != null) {
-            DoctorResponse doctorResponse = doctorClientConfig.getDoctor(appuntamentoRequest.getIdDoctor()).getBody();
-
-            PatientResponse patientResponse = getPatient(appuntamentoRequest.getIdPaziente());
-
-            AppuntamentoResponse appuntamentoResponse = appuntamentoClientConfig.postSaveAppunt(appuntamentoRequest);
-
-            AppuntamentoResponse1 appuntamentoResponse1 = new AppuntamentoResponse1();
-
-            appuntamentoResponse1.setIdAppuntamento(appuntamentoResponse.getIdAppuntamento());
-            appuntamentoResponse1.setDataAppuntamento(appuntamentoResponse.getDataAppuntamento());
-            appuntamentoResponse1.setLuogoAppuntamento(appuntamentoResponse.getLuogoAppuntamento());
-            appuntamentoResponse1.setStatoAppuntamento(appuntamentoResponse.getStatoAppuntamento());
-
-            assert doctorResponse != null;
-            appuntamentoResponse1.setCognomeDoctor(doctorResponse.getCognome());
-            appuntamentoResponse1.setNomeDoctor(doctorResponse.getNome());
-            appuntamentoResponse1.setEmailDoctor(doctorResponse.getEmail());
-            appuntamentoResponse1.setData_nascitaDoctor(doctorResponse.getData_nascita());
-            appuntamentoResponse1.setSpecializzazione(doctorResponse.getSpecializzazione());
-
-            assert patientResponse != null;
-            appuntamentoResponse1.setCognomePaziente(patientResponse.getCognome());
-            appuntamentoResponse1.setNomePaziente(patientResponse.getNome());
-            appuntamentoResponse1.setData_nascitaPaziente(patientResponse.getData_nascita());
-            appuntamentoResponse1.setEmailPaziente(patientResponse.getEmail());
-            appuntamentoResponse1.setNumero_telefonoPaziente(patientResponse.getNumero_telefono());
-            return appuntamentoResponse1;
-        }
-        return null;
-    }
+   private  CustomPatientRepository customPatientRepository;
 
 
     public List<PatientResponse> ricercaPatient(FiltroPatientRequest filtroPatientRequest) {
