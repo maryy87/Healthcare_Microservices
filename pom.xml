@@ -23,7 +23,7 @@
 		<module>patient</module>
 		<module>doctor</module>
 		<module>appuntamento</module>
-		<module>discovery-serverr</module>
+		<module>discovery-server</module>
 	</modules>
 
 	<properties>
