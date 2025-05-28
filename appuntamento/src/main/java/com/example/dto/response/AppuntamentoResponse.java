@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class AppuntamentoResponse {
 
-    private Long idAppuntamento;
+    private String idAppuntamento;
 
     private Long idPaziente;
     private Long idDoctor;

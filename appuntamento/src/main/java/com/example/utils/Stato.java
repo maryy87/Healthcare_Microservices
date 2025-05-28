@@ -4,5 +4,5 @@ public enum Stato {
 
     PRENOTATO,
     COMPLETATO,
-    ANNULATO
+    ANNULLATO
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -29,9 +30,40 @@ public class AppuntamentoService {
         log.info("ha ritornato apuntamento response");
         return appuntamentoMapper.mapEntityToResponse(appuntamento);
 
-
     }
 
+    public AppuntamentoResponse updateAppuntamento(AppuntamentoRequest appuntamentoRequest, String idAppuntamento) {
+        log.info("intrato nel metodo updateAppuntamento dentro appuntamento");
+        Optional<Appuntamento> byId = appuntamentoRepository.findById(idAppuntamento);
+        if (byId.isPresent()) {
+            Appuntamento appuntamento = appuntamentoMapper.mapRequestToEntity(appuntamentoRequest);
+            appuntamento.setIdAppuntamento(idAppuntamento);
+            appuntamento.setDataCreazioneAppuntamento(byId.get().getDataCreazioneAppuntamento());
+            Appuntamento appuntamento1 = appuntamentoRepository.save(appuntamento);
+            return appuntamentoMapper.mapEntityToResponse(appuntamento1);
+        }
+        return null;
+    }
+
+    public Boolean deleteAppuntamento(String idAppuntamento) {
+        if (appuntamentoRepository.findById(idAppuntamento).isPresent()) {
+            appuntamentoRepository.deleteById(idAppuntamento);
+            if (appuntamentoRepository.findById(idAppuntamento).isPresent()) {
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public AppuntamentoResponse getAppuntamento(String idAppuntamento) {
+        Optional<Appuntamento> optionalAppuntamento = appuntamentoRepository.findById(idAppuntamento);
+        if (optionalAppuntamento.isPresent()) {
+            return appuntamentoMapper.mapEntityToResponse(optionalAppuntamento.get());
+        }
+        return null;
+
+    }
 
 
 }
