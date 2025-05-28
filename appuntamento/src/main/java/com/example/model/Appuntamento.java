@@ -14,11 +14,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Document(collation = "appuntamento")
+@Document(collection = "appuntamento")
 public class Appuntamento {
 
     @Id
-    private Long idAppuntamento;
+    private String idAppuntamento;
 
     private Long idPaziente;
     private Long idDoctor;
