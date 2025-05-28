@@ -24,6 +24,8 @@
 		<module>doctor</module>
 		<module>appuntamento</module>
 		<module>discovery-server</module>
+		<module>../../progetti microservizi/MedicalRecord/MedicalRecord</module>
+
 	</modules>
 
 	<properties>

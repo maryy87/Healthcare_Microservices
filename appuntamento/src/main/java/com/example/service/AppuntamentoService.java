@@ -33,7 +33,7 @@ public class AppuntamentoService {
     }
 
     public AppuntamentoResponse updateAppuntamento(AppuntamentoRequest appuntamentoRequest, String idAppuntamento) {
-        log.info("intrato nel metodo updateAppuntamento dentro appuntamento");
+        log.info("entrato nel metodo updateAppuntamento dentro appuntamento");
         Optional<Appuntamento> byId = appuntamentoRepository.findById(idAppuntamento);
         if (byId.isPresent()) {
             Appuntamento appuntamento = appuntamentoMapper.mapRequestToEntity(appuntamentoRequest);
