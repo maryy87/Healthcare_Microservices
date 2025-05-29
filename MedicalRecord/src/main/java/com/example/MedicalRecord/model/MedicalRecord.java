@@ -24,7 +24,7 @@ public class MedicalRecord {
     private Long idPaziente;
     private List<String> diagnosiList;
     private List<Prescrizioni> prescrizioni;
-    private List<String> pianiTrattamento;
+    private List<PianiTrattamento> pianiTrattamento;
     private List<String> risultatiEsameLaboratorio;
     private String anamnesi;
 
