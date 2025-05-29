@@ -1,5 +1,6 @@
 package com.example.MedicalRecord.dto.response;
 
+import com.example.MedicalRecord.model.Prescrizioni;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ public class MedicalRecordResponse {
     private LocalDateTime dataCreazioneCartellaMedica;
     private Long idPaziente;
     private List<String> diagnosiList;
-    private List<String> elencoPrescrizioni;
+    private List<Prescrizioni> prescrizioni;
     private List<String> pianiTrattamento;
     private List<String> risultatiEsameLaboratorio;
     private String anamnesi;
