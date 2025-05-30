@@ -22,7 +22,7 @@ public class MedicalRecord {
 
     private LocalDateTime dataCreazioneCartellaMedica;
     private Long idPaziente;
-    private List<String> diagnosiList;
+    private List<Diagnosi> diagnosiList;
     private List<Prescrizioni> prescrizioni;
     private List<PianiTrattamento> pianiTrattamento;
     private List<String> risultatiEsameLaboratorio;

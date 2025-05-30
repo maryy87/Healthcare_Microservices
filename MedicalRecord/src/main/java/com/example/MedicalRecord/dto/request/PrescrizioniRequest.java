@@ -11,12 +11,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class PrescrizioniRequest {
 
-    private Long idPaziente;
     private String nomeFarmaco;                     // Nome del farmaco
     private String dosaggio;                    // Es. "500mg", "10ml"
     private String frequenzaSomministrazione;   // Es. "2 volte al giorno"
     private String durataTrattamento;           // Es. "7 giorni"
     private String viaSomministrazione;         // Es. "Orale", "Intramuscolare", "Endovenosa"
-    private Long idMedico;
 
 }
