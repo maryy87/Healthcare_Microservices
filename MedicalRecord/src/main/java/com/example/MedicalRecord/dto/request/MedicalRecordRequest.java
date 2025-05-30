@@ -3,6 +3,7 @@ package com.example.MedicalRecord.dto.request;
 import com.example.MedicalRecord.model.Diagnosi;
 import com.example.MedicalRecord.model.PianiTrattamento;
 import com.example.MedicalRecord.model.Prescrizioni;
+import com.example.MedicalRecord.model.RisultatiEsameLaboratorio;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,6 @@ public class MedicalRecordRequest {
     private List<Diagnosi> diagnosiList;
     private List<Prescrizioni> prescrizioni;
     private List<PianiTrattamento> pianiTrattamento;
-    private List<String> risultatiEsameLaboratorio;
+    private List<RisultatiEsameLaboratorio> risultatiEsameLaboratorio;
     private String anamnesi;
 }

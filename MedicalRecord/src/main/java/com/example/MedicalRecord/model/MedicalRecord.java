@@ -25,7 +25,7 @@ public class MedicalRecord {
     private List<Diagnosi> diagnosiList;
     private List<Prescrizioni> prescrizioni;
     private List<PianiTrattamento> pianiTrattamento;
-    private List<String> risultatiEsameLaboratorio;
+    private List<RisultatiEsameLaboratorio> risultatiEsameLaboratorio;
     private String anamnesi;
 
 }
