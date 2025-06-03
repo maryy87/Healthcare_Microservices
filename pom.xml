@@ -25,6 +25,7 @@
 		<module>appuntamento</module>
 		<module>discovery-server</module>
 		<module>MedicalRecord</module>
+		<module>api-gateway-cloud</module>
 
 	</modules>
 
