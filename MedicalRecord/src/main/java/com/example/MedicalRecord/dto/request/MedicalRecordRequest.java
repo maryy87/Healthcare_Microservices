@@ -18,9 +18,9 @@ public class MedicalRecordRequest {
 
     private LocalDateTime dataCreazioneCartellaMedica;
     private Long idPaziente;
-    private List<Diagnosi> diagnosiList;
-    private List<Prescrizioni> prescrizioni;
-    private List<PianiTrattamento> pianiTrattamento;
-    private List<RisultatiEsameLaboratorio> risultatiEsameLaboratorio;
+    private Diagnosi diagnosiList;
+    private Prescrizioni prescrizioni;
+    private PianiTrattamento pianiTrattamento;
+    private RisultatiEsameLaboratorio risultatiEsameLaboratorio;
     private String anamnesi;
 }
