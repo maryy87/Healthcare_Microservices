@@ -14,9 +14,14 @@ public class FallbackController {
         return "Doctor Service is down!";
     }
 
+    @GetMapping("/patientFallBack")
+    public String patientFallBack() {
+        return "Patient Service is down!";
+    }
+
     @PostMapping("/appuntamentoFallBack")
     public String appuntamentoFallBack() {
-        return "Appuntamento Service is down!";
+        return "appuntamento service is down!";
     }
 
 }
