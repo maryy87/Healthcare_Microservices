@@ -55,7 +55,7 @@ public class DoctorController {
     public ResponseEntity<String> deleteDoctor(@PathVariable Long idDoctor) {
         boolean b = doctorService.deleteDoctor(idDoctor);
         if (b) {
-            return ResponseEntity.ok("doctore eliminato con successo!");
+            return ResponseEntity.ok("dottore eliminato con successo!");
         }
         return ResponseEntity.ofNullable("il dottore non esiste!");
     }
