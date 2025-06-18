@@ -1,3 +1,4 @@
+version: '3.8'
 
 services:
   discovery-server:
@@ -28,10 +29,16 @@ services:
       - "18080:8080"
     depends_on:
       - discovery-server
+      - patient-db
     networks:
       - microservices-net
     environment:
       - SPRING_PROFILES_ACTIVE=nabil
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://patient-db:5432/patient_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=sa3ama
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_SHOW_SQL=true
 
   doctor:
     build:
@@ -47,9 +54,9 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=nabil
       - SPRING_DATASOURCE_URL=jdbc:postgresql://doctor-db:5432/doctor_db
-      - SPRING_DATASOURCE_USERNAME=doctor_user
-      - SPRING_DATASOURCE_PASSWORD=doctor_pass
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update  # o validate/create/drop-create
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=sa3ama
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - SPRING_JPA_SHOW_SQL=true
 
   medical-record:
@@ -61,8 +68,11 @@ services:
       - "18085:8085"
     depends_on:
       - discovery-server
+      - medical-record-db
     networks:
       - microservices-net
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongo_user:mongo_pass@medical-record-db:27017/medical_record_db?authSource=admin
 
   appuntamento:
     build:
@@ -72,8 +82,11 @@ services:
       - "18084:8084"
     depends_on:
       - discovery-server
+      - appuntamento-db
     networks:
       - microservices-net
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongo_user:mongo_pass@appuntamento-db:27017/appuntamento_db?authSource=admin
 
   zipkin:
     image: openzipkin/zipkin
@@ -82,23 +95,68 @@ services:
     networks:
       - microservices-net
 
+  doctor-db:
+    image: postgres:15
+    container_name: doctor-db
+    environment:
+      POSTGRES_DB: doctor_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: sa3ama
+    ports:
+      - "5433:5432"
+    networks:
+      - microservices-net
+    volumes:
+      - doctor-db-data:/var/lib/postgresql/data
+
+  patient-db:
+    image: postgres:15
+    container_name: patient-db
+    environment:
+      POSTGRES_DB: patient_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: sa3ama
+    ports:
+      - "5434:5432"
+    networks:
+      - microservices-net
+    volumes:
+      - patient-db-data:/var/lib/postgresql/data
+
+  medical-record-db:
+    image: mongo:6
+    container_name: medical-record-db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo_user
+      MONGO_INITDB_ROOT_PASSWORD: mongo_pass
+      MONGO_INITDB_DATABASE: medical_record_db
+    ports:
+      - "27018:27017"
+    networks:
+      - microservices-net
+    volumes:
+      - medical-record-db-data:/data/db
+
+  appuntamento-db:
+    image: mongo:6
+    container_name: appuntamento-db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo_user
+      MONGO_INITDB_ROOT_PASSWORD: mongo_pass
+      MONGO_INITDB_DATABASE: appuntamento_db
+    ports:
+      - "27019:27017"
+    networks:
+      - microservices-net
+    volumes:
+      - appuntamento-db-data:/data/db
+
+volumes:
+  doctor-db-data:
+  patient-db-data:
+  medical-record-db-data:
+  appuntamento-db-data:
+
 networks:
   microservices-net:
     driver: bridge
-
-
-
-#####################DATABASE########################
-doctor-db:
-  image: postgres:15
-  container_name: doctor-db
-  environment:
-    POSTGRES_DB: doctor_db
-    POSTGRES_USER: doctor_user
-    POSTGRES_PASSWORD: doctor_pass
-  ports:
-    - "5433:5432"  # Espone la porta 5432 del container sulla 5433 del tuo host (opzionale)
-  networks:
-    - microservices-net
-  volumes:
-    - doctor-db-data:/var/lib/postgresql/data
