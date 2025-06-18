@@ -13,28 +13,36 @@ import com.example.Patient.mapper.PatientMapper;
 import com.example.Patient.model.Patient;
 import com.example.Patient.repository.CustomPatientRepository;
 import com.example.Patient.repository.PatientRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class PatientService {
 
     @Autowired
-    PatientMapper patientMapper;
+    private PatientMapper patientMapper;
     @Autowired
-    PatientRepository patientRepository;
-
+    private PatientRepository patientRepository;
     @Autowired
-   private  CustomPatientRepository customPatientRepository;
-
-
+    private CustomPatientRepository customPatientRepository;
     @Autowired
     private AppuntamentoClientConfig appuntamentoClientConfig;
     @Autowired
     private DoctorClientConfig doctorClientConfig;
+
+    private final KafkaTemplate<String, AppuntamentoResponse1> kafkaTemplate;
+
+    @Autowired
+    public PatientService(KafkaTemplate<String, AppuntamentoResponse1> kafkaTemplate) {
+        this.kafkaTemplate = kafkaTemplate;
+    }
 
 
     public AppuntamentoResponse1 creaAppuntamento(AppuntamentoRequest appuntamentoRequest) {
@@ -65,7 +73,13 @@ public class PatientService {
             appuntamentoResponse1.setData_nascitaPaziente(patientResponse.getData_nascita());
             appuntamentoResponse1.setEmailPaziente(patientResponse.getEmail());
             appuntamentoResponse1.setNumero_telefonoPaziente(patientResponse.getNumero_telefono());
+
+//            ###aggiunto kafka per mandare un messagio a dottore quando un appuntamento è creato
+            kafkaTemplate.send("new-appuntamento", appuntamentoResponse1);
+            log.info("topic inviato a kafka");
+
             return appuntamentoResponse1;
+
         }
         return null;
     }
