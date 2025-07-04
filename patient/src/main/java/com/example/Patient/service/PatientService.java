@@ -37,16 +37,23 @@ public class PatientService {
     @Autowired
     private DoctorClientConfig doctorClientConfig;
 
-    private final KafkaTemplate<String, AppuntamentoResponse1> kafkaTemplate;
+    private final KafkaTemplate<String, AppuntamentoResponse1> kafkaTemplate ;
 
     @Autowired
-    public PatientService(KafkaTemplate<String, AppuntamentoResponse1> kafkaTemplate) {
+    public PatientService(KafkaTemplate<String, AppuntamentoResponse1> kafkaTemplate,PatientRepository patientRepository, PatientMapper patientMapper,CustomPatientRepository customPatientRepository,DoctorClientConfig doctorClientConfig,AppuntamentoClientConfig appuntamentoClientConfig) {
         this.kafkaTemplate = kafkaTemplate;
+        this.patientRepository = patientRepository;
+        this.patientMapper = patientMapper;
+        this.customPatientRepository=customPatientRepository;
+        this.doctorClientConfig=doctorClientConfig;
+        this.appuntamentoClientConfig=appuntamentoClientConfig;
+
     }
 
 
     public AppuntamentoResponse1 creaAppuntamento(AppuntamentoRequest appuntamentoRequest) {
         if (appuntamentoRequest != null) {
+
             DoctorResponse doctorResponse = doctorClientConfig.getDoctor(appuntamentoRequest.getIdDoctor()).getBody();
 
             PatientResponse patientResponse = getPatient(appuntamentoRequest.getIdPaziente());
@@ -120,6 +127,7 @@ public class PatientService {
             return true;
         }
         return false;
+
     }
 
     public PatientResponse getPatient(Long idPatient) {
