@@ -26,8 +26,9 @@
 		<module>discovery-server</module>
 		<module>MedicalRecord</module>
 		<module>api-gateway-cloud</module>
+        <module>identify-service</module>
 
-	</modules>
+    </modules>
 
 	<properties>
 		<java.version>22</java.version>

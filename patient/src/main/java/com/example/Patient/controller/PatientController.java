@@ -6,6 +6,7 @@ import com.example.Patient.dto.request.PatientRequest;
 import com.example.Patient.dto.response.AppuntamentoResponse1;
 import com.example.Patient.dto.response.PatientResponse;
 import com.example.Patient.service.PatientService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -49,11 +50,15 @@ public class PatientController {
 
     @PostMapping(value = "/savePatient",consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PatientResponse> savePatient(@RequestBody PatientRequest patientRequest) {
+    public ResponseEntity<PatientResponse> savePatient(@RequestBody PatientRequest patientRequest, HttpServletRequest request) {
         PatientResponse patientResponse = patientService.savePatient(patientRequest);
         if (patientResponse != null) {
             return ResponseEntity.ok(patientResponse);
         }
+        System.out.println("Request URI: " + request.getRequestURI());
+
+        // Stampa URL completo
+        System.out.println("Request URL: " + request.getRequestURL());
         return ResponseEntity.notFound().build();
     }
 
